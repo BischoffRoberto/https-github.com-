@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Script.js</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .test { margin: 10px; padding: 10px; border: 1px solid #ccc; }
+        .pass { background: #90EE90; }
+        .fail { background: #FFB6C6; }
+    </style>
+</head>
+<body>
+    <h1>Test de Script.js</h1>
+    <div id="results"></div>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function addTest(name, passed, message = '') {
+            const div = document.createElement('div');
+            div.className = 'test ' + (passed ? 'pass' : 'fail');
+            div.textContent = (passed ? '✓' : '✗') + ' ' + name;
+            if (message) div.textContent += ' - ' + message;
+            results.appendChild(div);
+        }
+        
+        // Test 1: Script cargado
+        addTest('Script.js cargó', typeof ultimaLista !== 'undefined', '');
+        
+        // Test 2: Variables globales
+        addTest('eanData existe', typeof eanData !== 'undefined', '');
+        addTest('ultimaLista existe', typeof ultimaLista !== 'undefined', '');
+        
+        // Test 3: Funciones
+        addTest('cargarDatosEAN existe', typeof cargarDatosEAN === 'function', '');
+        addTest('agregarProducto existe', typeof agregarProducto === 'function', '');
+        
+        // Test 4: DOM
+        addTest('btnAgregar existe', document.getElementById('btnAgregar') !== null, '');
+        addTest('btnGuardar existe', document.getElementById('btnGuardar') !== null, '');
+        addTest('btnBorrar existe', document.getElementById('btnBorrar') !== null, '');
+        addTest('codigo input existe', document.getElementById('codigo') !== null, '');
+        addTest('ean input existe', document.getElementById('ean') !== null, '');
+        addTest('descripcion input existe', document.getElementById('descripcion') !== null, '');
+        
+        // Test 5: Cargar EAN data
+        (async () => {
+            try {
+                // Simular login primero  
+                await fetch('/login', {method: 'POST', body: new URLSearchParams({usuario: 'admin', contrasena: 'admin1234'})});
+                
+                //Cargar EAN
+                await cargarDatosEAN();
+                addTest('cargarDatosEAN ejecutó', eanData.length > 0, `${eanData.length} items`);
+            } catch (e) {
+                addTest('cargarDatosEAN ejecutó', false, e.message);
+            }
+        })();
+    </script>
+</body>
+</html>

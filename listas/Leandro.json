@@ -1,0 +1,32 @@
+[
+  {
+    "Codigo": "45624",
+    "Descripcion": "Pollo Fresco GTA  x Kg",
+    "Stock": 29.99,
+    "FechaVencimiento": "2026-03-26",
+    "Estado": "Correcto",
+    "DiasRestantes": 22,
+    "Usuario": "Leandro",
+    "Legajo": "11077"
+  },
+  {
+    "Codigo": "17654",
+    "Descripcion": "Picada x Kg",
+    "Stock": 2.223,
+    "FechaVencimiento": "2026-03-28",
+    "Estado": "Correcto",
+    "DiasRestantes": 24,
+    "Usuario": "Leandro",
+    "Legajo": "11077"
+  },
+  {
+    "Codigo": "23131",
+    "Descripcion": "Queso Port Salut Barraza Media Horma x Kg",
+    "Stock": 10.836,
+    "FechaVencimiento": "2026-03-28",
+    "Estado": "Correcto",
+    "DiasRestantes": 24,
+    "Usuario": "Leandro",
+    "Legajo": "11077"
+  }
+]

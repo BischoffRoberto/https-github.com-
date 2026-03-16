@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARCHIVO VENCIMIENTO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/admin.css">
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#dc3545">
+</head>
+<body class="bg-warning">
+
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center">
+
+    <!-- Logo y título con encuadre tipo botón -->
+    <div class="d-flex align-items-center mb-3 p-3 rounded-pill border border-danger bg-white shadow header-pill" style="border-width:3px !important;">
+        <img src="/static/logo.png" alt="Logo" class="logo-admin me-3">
+        <div class="d-flex flex-column text-start">
+            <h1 class="text-danger text-uppercase fw-bold mb-0">Archivo Vencimiento</h1>
+            <div class="site-credit small">
+                <span class="credit-handle">@RobertoBischoff</span>
+                <span class="credit-role">creador de la página</span>
+            </div>
+        </div>
+    </div>
+    <!-- lugar para mensajes globales justo debajo del título -->
+    <div id="mensajeTop" class="alert d-none"></div>
+
+    <!-- Botón administrador -->
+    {% if rol == "admin" %}
+    <div class="mb-3">
+        <a href="/admin" class="btn btn-dark btn-sm">🔑 Administrador</a>
+    </div>
+    {% endif %}
+    <!-- user-controls will be inserted inside the product card below -->
+
+    
+
+    <!-- Formulario agregar producto -->
+    <div class="card p-4 mb-3 shadow-lg border-0 form-card">
+        <h4 class="mb-3 text-dark">➕ Agregar producto</h4>
+        <!-- Aviso del formulario (aparece arriba del botón agregar) -->
+        <div id="mensajeForm" class="alert d-none mb-2"></div>
+        <div id="eanStatus" class="text-muted small mb-2">Cargando catálogo...</div>
+        <div class="form-container">
+            <!-- DESCRIPCIÓN -->
+            <div class="mb-2 position-relative">
+                <label class="form-label small">Descripción</label>
+                <input type="text" id="descripcion" class="form-control form-control-sm" placeholder="Buscar o escribir descripción">
+                <div id="descDropdown" class="dropdown-suggestions d-none"></div>
+            </div>
+            
+            <!-- EAN -->
+            <div class="mb-2 position-relative">
+                <label class="form-label small">EAN</label>
+                <input type="tel" id="ean" class="form-control form-control-sm" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Escribe EAN (se autocompletan código y descripción)">
+                <div id="eanDropdown" class="dropdown-suggestions d-none"></div>
+            </div>
+            
+            <!-- CÓDIGO -->
+            <div class="mb-2 position-relative">
+                <label class="form-label small">Código</label>
+                <input type="tel" id="codigo" class="form-control form-control-sm" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Escribe aquí y se llena EAN">
+                <div id="codigoDropdown" class="dropdown-suggestions d-none"></div>
+            </div>
+            
+            <!-- FECHA -->
+            <div class="mb-3">
+                <label class="form-label small">Fecha de vencimiento</label>
+                <input type="date" id="fecha" class="form-control form-control-sm">
+            </div>
+            
+            <button id="btnAgregar" class="btn btn-danger btn-sm w-100">➕ Agregar producto</button>
+        </div> <!-- end form-container -->
+
+
+    </div>
+    <!-- user badge movable -->
+    <div class="user-controls" aria-hidden="false">
+        <button id="userToggle" class="icon-btn" title="Mostrar detalles usuario">
+            <div class="user-icon">{{ usuario[0]|upper }}</div>
+        </button>
+        <div class="user-badge shadow-sm">
+            <div class="user-icon">{{ usuario[0]|upper }}</div>
+            <div class="user-info d-flex flex-column">
+                <div class="d-flex align-items-center">
+                    <div class="user-icons me-2">
+                        <button class="icon-btn" title="Perfil de usuario">👤</button>
+                    </div>
+                    <div class="user-name">{{ usuario }}</div>
+                </div>
+                <div class="d-flex align-items-center mt-1">
+                    <div class="leg-icon me-2">
+                        <button class="icon-btn" title="Ver legajo">🆔</button>
+                    </div>
+                    <div class="user-leg-id">Legajo {{ legajo }}</div>
+                </div>
+                {% if rol == "admin" and ip %}
+                <div class="text-muted small mt-1">IP: {{ ip }}</div>
+                {% endif %}
+                <div class="mt-2">
+                    <button id="btnCerrarSesion" class="btn btn-outline-secondary btn-sm logout-icon" title="Cerrar sesión">🚪</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Lista de productos -->
+    <div class="card p-4 shadow-lg border-0 form-card">
+        <h4 class="mb-3 text-dark">📋 Lista de productos</h4>
+        <!-- acciones siempre arriba: borrar primero, luego toggle, luego guardar -->
+        <div class="d-flex gap-2 mb-2 flex-wrap">
+            <button id="btnBorrar" class="btn btn-danger btn-sm">🗑️ Borrar lista completa</button>
+            <button id="btnToggle" class="btn btn-primary btn-sm flex-grow-1">Mostrar lista</button>
+            <button id="btnGuardar" class="btn btn-success btn-sm">💾 Guardar en Excel</button>
+        </div>
+
+        <ul id="lista" class="list-group small"></ul>
+        <!-- fin de lista -->
+    </div>
+
+    <!-- Mensajes -->
+    <div id="mensaje" class="alert d-none mt-3"></div>
+
+</div>
+
+<!-- Modal de cierre de sesión -->
+<div class="modal fade" id="modalCerrar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cerrar sesión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Qué deseas hacer con tu lista antes de salir?</p>
+                <div class="d-grid gap-2">
+                    <button id="keepAndLogout" class="btn btn-primary">Salir y conservar lista</button>
+                    <button id="clearAndLogout" class="btn btn-danger">Salir y borrar lista</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/script.js?v=5"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async function(){
+        // cargar el catálogo EAN cuando el formulario esté listo
+        await cargarDatosEAN();
+
+        // registrar service worker si está disponible
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/static/sw.js').then(() => console.log('SW registered')).catch(()=>{});
+        }
+    });
+</script>
+</body>
+</html>

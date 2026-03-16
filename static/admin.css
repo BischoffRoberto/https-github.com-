@@ -1,0 +1,93 @@
+.logo-admin {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;       /* círculo perfecto */
+  object-fit: cover;        /* recorta dentro del círculo */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  background: #fff;
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.form-container-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 350px;
+}
+
+/* Teléfono: ancho controlado, no se desborda lateralmente; en pantallas pequeñas ocupa 100% */
+.form-container-admin input[type="tel"], .form-container-admin input[type="text"] {
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .form-container-admin {
+    max-width: 95%;
+    padding: 0 8px;
+  }
+  .form-container-admin input[type="tel"], .form-container-admin input[type="text"] {
+    max-width: 100%;
+  }
+}
+
+.table-admin {
+  font-size: 0.9rem;
+}
+.table-admin th {
+  text-align: center;
+}
+.table-admin td {
+  vertical-align: middle;
+}
+
+.btn {
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.alert {
+  max-width: 400px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+/* Simple modal styles (no Bootstrap JS needed) */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal .modal-dialog {
+  max-width: 480px;
+  width: 95%;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1040;
+}
+
+/* Rounded logo used in login */
+.rounded-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}

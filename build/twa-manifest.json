@@ -1,0 +1,40 @@
+{
+  "packageId": "com.miapp.vencimientos",
+  "host": "https://tu-dominio.com",
+  "launcherUrl": "/",
+  "name": "MiAPP Vencimientos",
+  "launcherIcon": "https://tu-dominio.com/static/logo.png",
+  "primaryColor": "#dc3545",
+  "secondaryColor": "#ffffff",
+  "statusBarColor": "#dc3545",
+  "navigationBarColor": "#ffffff",
+  "orientation": "portrait-primary",
+  "display": "standalone",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "shortcuts": [
+    {
+      "name": "Productos",
+      "short_name": "Productos",
+      "url": "/home",
+      "icons": [
+        {
+          "src": "https://tu-dominio.com/static/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "short_name": "Admin",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "https://tu-dominio.com/static/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "generatorApp": "bubblewrap"
+}

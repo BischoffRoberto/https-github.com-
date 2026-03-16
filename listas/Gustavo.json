@@ -1,0 +1,42 @@
+[
+  {
+    "Codigo": "45624",
+    "Descripcion": "Pollo Fresco GTA  x Kg",
+    "Stock": 29.99,
+    "FechaVencimiento": "2026-03-16",
+    "Estado": "Correcto",
+    "DiasRestantes": 12,
+    "Usuario": "Gustavo",
+    "Legajo": "11062"
+  },
+  {
+    "Codigo": "23131",
+    "Descripcion": "Queso Port Salut Barraza Media Horma x Kg",
+    "Stock": 10.836,
+    "FechaVencimiento": "2026-03-24",
+    "Estado": "Correcto",
+    "DiasRestantes": 20,
+    "Usuario": "Gustavo",
+    "Legajo": "11062"
+  },
+  {
+    "Codigo": "23129",
+    "Descripcion": "Queso Cremoso Barraza Media Horma x Kg",
+    "Stock": -1.754,
+    "FechaVencimiento": "2026-03-23",
+    "Estado": "Correcto",
+    "DiasRestantes": 19,
+    "Usuario": "Gustavo",
+    "Legajo": "11062"
+  },
+  {
+    "Codigo": "24810",
+    "Descripcion": "Agua Cellier Sin Gas 2 Lt",
+    "Stock": -107.0,
+    "FechaVencimiento": "2026-03-28",
+    "Estado": "Correcto",
+    "DiasRestantes": 24,
+    "Usuario": "Gustavo",
+    "Legajo": "11062"
+  }
+]

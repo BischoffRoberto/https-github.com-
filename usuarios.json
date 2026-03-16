@@ -1,0 +1,40 @@
+{
+  "admin": {
+    "password": "admin1234",
+    "ips": [
+      "192.168.1.4",
+      "127.0.0.1"
+    ],
+    "activo": true,
+    "rol": "admin",
+    "tlf": "",
+    "legajo": "0001",
+    "nombre": "Administrador",
+    "correo": "",
+    "bloqueado": false
+  },
+  "roberto": {
+    "password": "0606",
+    "ips": [
+      "127.0.0.1"
+    ],
+    "activo": true,
+    "rol": "usuario",
+    "tlf": "12345678",
+    "legajo": "9357",
+    "nombre": "Roberto Isaias Bischoff Angulo",
+    "correo": "robertobischoff92@gmail.com",
+    "bloqueado": false
+  },
+  "Leandro": {
+    "password": "11077",
+    "ips": [],
+    "activo": true,
+    "rol": "usuario",
+    "tlf": "",
+    "legajo": "11077",
+    "nombre": "Leandro Auge",
+    "correo": "",
+    "bloqueado": false
+  }
+}

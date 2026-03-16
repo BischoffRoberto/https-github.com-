@@ -1,0 +1,112 @@
+[
+  {
+    "Codigo": "75046",
+    "Descripcion": "MANZANA ROJA",
+    "EAN": "75046",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-04",
+    "Estado": "Vencido",
+    "DiasRestantes": -8,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "24810",
+    "Descripcion": "Agua Cellier Sin Gas 2 Lt",
+    "EAN": "7790639002416",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-03",
+    "Estado": "Vencido",
+    "DiasRestantes": -9,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "29889",
+    "Descripcion": "Gaseosa Coca Cola 2.5 Lt",
+    "EAN": "7790895005794",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-02",
+    "Estado": "Vencido",
+    "DiasRestantes": -10,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "14413",
+    "Descripcion": "Gaseosa Coca Cola Sin Azucar 2.5 Lt",
+    "EAN": "7790895068096",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-15",
+    "Estado": "Crítico (<7 días)",
+    "DiasRestantes": 3,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "75180",
+    "Descripcion": "TOMATE PERITA",
+    "EAN": "75180",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-09",
+    "Estado": "Vencido",
+    "DiasRestantes": -3,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "31808",
+    "Descripcion": "Soda Manaos Sifon 2 Lt",
+    "EAN": "7798113301529",
+    "Stock": "",
+    "FechaVencimiento": "2026-03-17",
+    "Estado": "Crítico (<7 días)",
+    "DiasRestantes": 5,
+    "Usuario": "roberto",
+    "Legajo": "0002"
+  },
+  {
+    "Codigo": "45624",
+    "Descripcion": "Pollo Fresco GTA  x Kg",
+    "EAN": "45624",
+    "Stock": 29.99,
+    "FechaVencimiento": "2026-03-04",
+    "Estado": "Vencido",
+    "DiasRestantes": -9,
+    "Usuario": "roberto",
+    "Legajo": "900"
+  },
+  {
+    "Codigo": "75129",
+    "Descripcion": "BANANA",
+    "EAN": "75129",
+    "Stock": 13.18,
+    "FechaVencimiento": "2026-03-02",
+    "Estado": "Vencido",
+    "DiasRestantes": -11,
+    "Usuario": "roberto",
+    "Legajo": "9357"
+  },
+  {
+    "Codigo": "24844",
+    "Descripcion": "Agua Cellier Saborizada S/gas Pomelo 1.5L",
+    "EAN": "7798113302687",
+    "Stock": 12.0,
+    "FechaVencimiento": "2222-02-22",
+    "Estado": "Correcto",
+    "DiasRestantes": 71568,
+    "Usuario": "roberto",
+    "Legajo": "9357"
+  },
+  {
+    "Codigo": "30387",
+    "Descripcion": "agua",
+    "EAN": "7790895003301",
+    "Stock": 0.0,
+    "FechaVencimiento": "2222-02-22",
+    "Estado": "Correcto",
+    "DiasRestantes": 71568,
+    "Usuario": "roberto",
+    "Legajo": "9357"
+  }
+]

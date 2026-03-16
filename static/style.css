@@ -1,0 +1,438 @@
+/* Logo centrado y redondo */
+.logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;    /* círculo perfecto */
+  object-fit: cover;     /* recorta la imagen dentro del círculo */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  background: #fff;
+  padding: 10px;
+  display: block;
+  margin: 0 auto;        /* centrado */
+}
+
+/* Formularios */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 320px;
+}
+
+/* center user-controls block */
+.form-container .user-controls {
+  display: inline-block;
+  position: static;
+}
+
+/* Botones */
+.btn {
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* Forzar que el contenedor padre no oculte el dropdown */
+.form-container {
+  overflow: visible;
+}
+
+.dropdown-suggestions .dropdown-item {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.dropdown-suggestions .item-label {
+  display: block;
+  word-break: break-word;
+}
+
+.dropdown-suggestions .item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Opcional: agrandar el dropdown de descripción si está contenido en un input corto */
+#descDropdown {
+  min-width: 340px;
+}
+
+.dropdown-suggestions .dropdown-item {
+  white-space: normal;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #000;
+}
+
+.dropdown-suggestions .dropdown-item:hover {
+  background-color: #e7f1ff;
+}
+
+.dropdown-suggestions .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-suggestions .item-label {
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+  color: #0d6efd;
+}
+
+.dropdown-suggestions .item-meta {
+  font-size: 0.78rem;
+  color: #5a5f65;
+}
+
+/* Mensajes */
+.alert {
+  max-width: 400px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+/* Tabla de usuarios */
+.table {
+  font-size: 0.9rem;
+}
+.table th {
+  text-align: center;
+}
+.table td {
+  vertical-align: middle;
+}
+
+/* Encabezados */
+h1, h2, h4 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+}
+
+/* Fondo general */
+html, body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f8f9fa;
+  /* evitar scroll horizontal en móviles */
+  overflow-x: hidden;
+}
+
+/* asegurar contenedor no exceda el ancho de pantalla */
+.container {
+  max-width: 100%;
+}
+
+/* User badge (movable) */
+.user-controls {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 1050;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  padding: 4px 8px;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  overflow: visible;
+}
+
+
+
+/* collapsed state: only show avatar icon */
+.user-controls:not(.expanded) {
+  width: auto;
+  gap: 0;
+  padding: 0;
+}
+.user-controls:not(.expanded) .user-badge {
+  display: none;
+}
+
+/* when expanded, show all details */
+.user-controls.expanded {
+  width: auto;
+}
+.user-controls.expanded .user-badge {
+  display: flex;
+}
+.user-controls.expanded .user-info {
+  display: flex;
+}
+
+.logout-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.user-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+  padding: 6px 8px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  min-width: 140px;
+  white-space: nowrap;
+  z-index: 1051;
+}
+
+/* Abre hacia la izquierda */
+.user-controls.open-left .user-badge {
+  right: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Abre hacia la derecha */
+.user-controls.open-right .user-badge {
+  left: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Abre hacia arriba */
+.user-controls.open-top .user-badge {
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Abre hacia abajo */
+.user-controls.open-bottom .user-badge {
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+}
+
+.user-name {
+  font-weight: 700;
+  color: #212529;
+}
+
+.user-legajo {
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
+/* Header pill tweaks */
+.header-pill {
+  max-width: 760px;
+  align-items: center;
+}
+
+
+/* Rounded logo used in header */
+.logo-admin {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  background: #fff;
+  padding: 6px;
+}
+
+/* User icon (initials) */
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#e9ecef,#ffffff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #495057;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  font-size: 0.95rem;
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e3a8a; /* azul oscuro */
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  min-width: 180px;
+}
+.user-badge .user-icons .icon-btn,
+.user-badge .leg-icon .icon-btn {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border: none;
+}
+.user-badge .user-name,
+.user-badge .user-legajo {
+  color: #fff;
+}
+
+.user-leg-id {
+  margin-left: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  color: #6c757d;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Small icon buttons next to username */
+.user-icons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.icon-btn {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.12s ease, transform 0.08s ease;
+  color: #495057;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+.icon-btn:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.leg-icon .icon-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 0.9rem;
+}
+
+/* make product list scrollable when it grows beyond a few items */
+#lista {
+  max-height: 260px; /* roughly 5 entries */
+  overflow-y: auto;
+  position: relative;
+}
+
+/* cards should fit inside mobile viewport */
+.card {
+  max-width: 100%;
+}
+
+/* keep action buttons visible even when scrolling list */
+.card .d-flex.gap-2.mb-2 {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding-top: 0.5rem;
+  z-index: 5;
+}
+
+#lista li {
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+#lista li .product-desc {
+  font-size: 1.6rem;
+  font-weight: 900 !important;
+  color: #000 !important;
+  margin-bottom: 0.45rem;
+  line-height: 1.2;
+}
+
+#lista li .stock-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+#lista li .dias-badge {
+  font-size: 0.85rem;
+  padding: 0.35em 0.55em;
+}
+
+/* ========== DROPDOWN CUSTOMIZADO PARA AUTOCOMPLETADO ========== */
+.dropdown-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 1050 !important;
+  min-width: 320px;
+  max-width: 95vw;
+  width: auto;
+  max-height: 350px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 8px;
+  padding: 8px 0;
+  display: none;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s ease;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+}
+
+.dropdown-item:hover {
+  background-color: #fff9e6;
+  font-weight: 500;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item .fw-bold {
+  color: #212529;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "Codigo": "75129",
+    "Descripcion": "BANANA",
+    "Stock": 13.18,
+    "FechaVencimiento": "2026-03-17",
+    "Estado": "Correcto",
+    "DiasRestantes": 13,
+    "Usuario": "magda",
+    "Legajo": "0101"
+  },
+  {
+    "Codigo": "23131",
+    "Descripcion": "Queso Port Salut Barraza Media Horma x Kg",
+    "Stock": 10.836,
+    "FechaVencimiento": "2026-04-01",
+    "Estado": "Correcto",
+    "DiasRestantes": 28,
+    "Usuario": "magda",
+    "Legajo": "0101"
+  },
+  {
+    "Codigo": "24828",
+    "Descripcion": "Agua Cellier Con Gas 2 Lt [24828]",
+    "Stock": 0.0,
+    "FechaVencimiento": "2026-03-09",
+    "Estado": "Crítico (<7 días)",
+    "DiasRestantes": 5,
+    "Usuario": "magda",
+    "Legajo": "0101"
+  }
+]

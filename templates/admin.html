@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel de Administración</title>
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body class="bg-light p-4">
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#dc3545">
+
+    <div class="text-center mb-4">
+        <img src="/static/logo.png" alt="Logo" class="logo-admin mb-2">
+        <h2 class="text-danger fw-bold">Panel de Administración</h2>
+    </div>
+    <div class="text-center mb-3 small text-muted">Creado por @Roberto Bischoff</div>
+
+    <div class="mb-3 text-center">
+        <a href="/logout" class="btn btn-secondary btn-sm">🚪 Cerrar sesión</a>
+        <a href="/home" class="btn btn-primary btn-sm">📋 Ir a productos</a>
+    </div>
+    {% if ip %}
+    <div class="text-center text-muted small mb-3">Tu IP: {{ ip }}</div>
+    {% endif %}
+
+    <!-- área de notificaciones administrativas -->
+    <div id="mensajeAdmin" class="alert d-none mt-3"></div>
+
+    <div class="form-container-admin mb-4">
+        <h4>Agregar nuevo usuario</h4>
+        <input type="text" id="nuevoUsuario" class="form-control" placeholder="Nombre de usuario">
+        <input type="text" id="nuevoNombre" class="form-control" placeholder="Nombre completo">
+        <input type="email" id="nuevoCorreo" class="form-control" placeholder="Correo electrónico">
+        <input type="tel" id="nuevoTlf" class="form-control" placeholder="Teléfono" inputmode="numeric" pattern="[0-9+\- ]*">
+        <input type="text" id="nuevoLegajo" class="form-control" placeholder="Legajo">
+        <input type="password" id="nuevaClave" class="form-control" placeholder="Contraseña">
+        <select id="nuevoRol" class="form-select">
+            <option value="usuario">Usuario</option>
+            <option value="admin">Administrador</option>
+        </select>
+        <button class="btn btn-success mt-2" onclick="agregarUsuario()">➕ Agregar usuario</button>
+    </div>
+
+    <div class="form-container-admin mb-4">
+        <h4>Subir archivo base (stock/inventario)</h4>
+        <form id="formInventario" enctype="multipart/form-data">
+            <input type="file" id="archivoBase" name="file" class="form-control" accept=".xlsx,.xls">
+        </form>
+        <div class="d-flex gap-2 mt-2">
+            <button class="btn btn-primary" onclick="subirArchivo()">💾 Guardar</button>
+            <button class="btn btn-secondary" onclick="listarArchivos()">📁 Refrescar lista</button>
+            <button class="btn btn-warning" onclick="restaurarListas()">♻️ Restaurar listas</button>
+            <button class="btn btn-outline-danger" onclick="descargarTodos()">⬇️ Descargar todos</button>
+            <button class="btn btn-outline-info" onclick="descargarListaUnificada()">📊 Descargar lista unificada usuarios</button>
+        </div>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Gestión de Inventario (Edición Directa)</h5>
+            <button class="btn btn-sm btn-outline-secondary" id="btnTogglePreview" onclick="togglePreview()">Mostrar</button>
+        </div>
+        <div class="mt-2 mb-2">
+            <input type="text" id="filterInv" class="form-control form-control-sm" placeholder="Buscar descripción inventario">
+        </div>
+        
+        <div id="previewContainer" style="max-height:400px; overflow:auto; display:none;">
+            <table class="table table-sm table-bordered" id="tablaInventario">
+                <thead><tr><th>Código</th><th>Descripción</th><th>Stock</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaInventarioBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-container-admin mb-4">
+        <h4>Subir archivo EAN (mapeo EAN→código)</h4>
+        <form id="formEAN" enctype="multipart/form-data">
+            <input type="file" id="archivoEAN" name="file" class="form-control" accept=".xlsx,.xls">
+        </form>
+        <div class="d-flex gap-2 mt-2">
+            <button class="btn btn-primary" onclick="subirArchivoEAN()">💾 Guardar EAN</button>
+        </div>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Gestión de EAN (Edición Directa)</h5>
+            <button class="btn btn-sm btn-outline-secondary" id="btnTogglePreviewEAN" onclick="togglePreviewEAN()">Mostrar</button>
+        </div>
+        <div class="mt-2 mb-2">
+            <input type="text" id="filterEAN" class="form-control form-control-sm" placeholder="Buscar EAN o código">
+        </div>
+        
+        <div id="previewContainerEAN" style="max-height:400px; overflow:auto; display:none;">
+            <table class="table table-sm table-bordered" id="tablaEAN">
+                <thead><tr><th>EAN</th><th>Código</th><th>Descripción</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaEANBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h4>Usuarios registrados</h4>
+    <div class="table-responsive">
+    <table class="table table-bordered mt-3 table-admin" style="font-size: 0.85rem;">
+        <thead class="table-danger">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Tel</th>
+                <th>Legajo</th>
+                <th>Rol</th>
+                <th>Activo</th>
+                <th>IPs</th>
+                <th>Bloqueado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaUsuarios">
+            {% for nombre, datos in usuarios.items() %}
+            <tr id="fila_{{ nombre }}">
+                <td>{{ nombre }}</td>
+                <td>{{ datos.nombre if datos.get('nombre') else '-' }}</td>
+                <td>{{ datos.correo if datos.get('correo') else '-' }}</td>
+                <td>{{ datos.tlf if datos.get('tlf') else '-' }}</td>
+                <td>{{ datos.legajo if datos.get('legajo') else '-' }}</td>
+                <td>{{ datos.rol }}</td>
+                <td>{{ "✅ Sí" if datos.activo else "❌ No" }}</td>
+                <td>{{ datos.ips|join(', ') if datos.get('ips') else "-" }}</td>
+                <td>
+                    {% if not datos.activo %}
+                        🔒 Usuario
+                    {% elif datos.get('bloqueado') %}
+                        🔒 IP
+                    {% else %}
+                        🔓 No
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="openUserModal('{{ nombre }}')">✏️ Modificar</button>
+                    <button class="btn btn-secondary btn-sm ms-1" onclick="verListaUsuario('{{ nombre }}')">📋 Ver lista</button>
+                    <button class="btn btn-outline-primary btn-sm ms-1" onclick="descargarListaUsuario('{{ nombre }}')">⬇️ Excel</button>
+                    <button class="btn btn-outline-info btn-sm ms-1" onclick="cargarListaDesdeBase('{{ nombre }}')">📊 Usar Base</button>
+                    <button class="btn btn-outline-success btn-sm ms-1" onclick="cargarListaDesdeEAN('{{ nombre }}')">📦 Cargar EAN</button>
+                    {% if not datos.activo %}
+                        <button class="btn btn-success btn-sm" onclick="openBlockModal('{{ nombre }}', true, this)">✅ Desbloquear</button>
+                    {% else %}
+                        <button class="btn btn-danger btn-sm" onclick="openBlockModal('{{ nombre }}', false, this)">⛔ Bloquear</button>
+                    {% endif %}
+                    {% if datos.get('bloqueado') %}
+                        <button class="btn btn-info btn-sm" onclick="desbloquearIP('{{ nombre }}', this)">🔓 Desbloquear IP</button>
+                    {% else %}
+                        <button class="btn btn-outline-danger btn-sm" onclick="bloquearIP('{{ nombre }}', this)">🔒 Bloquear IP</button>
+                    {% endif %}
+                    {% if nombre != "admin" %}
+                        <button class="btn btn-dark btn-sm" onclick="borrarUsuario('{{ nombre }}', this)">🗑️ Borrar</button>
+                    {% endif %}
+                    <div class="admin-action-msg d-none mt-1"></div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h4 class="mt-4">Archivos subidos</h4>
+    <div class="table-responsive">
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Archivo</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Tamaño (bytes)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaArchivos">
+            <!-- llenado por JS -->
+        </tbody>
+    </table>
+
+        <!-- Modal para editar usuario -->
+        <div class="modal" tabindex="-1" id="userModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar usuario</h5>
+                        <button type="button" class="btn-close" onclick="closeUserModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="modalUsuario">
+                        <div class="mb-2"><label class="form-label">Nombre completo</label><input id="modalNombre" class="form-control"></div>
+                        <div class="mb-2"><label class="form-label">Correo</label><input id="modalCorreo" class="form-control" type="email"></div>
+                        <div class="mb-2"><label class="form-label">Teléfono</label><input id="modalTlf" class="form-control" inputmode="numeric"></div>
+                        <div class="mb-2"><label class="form-label">IPs registradas</label><input id="modalIps" class="form-control" readonly></div>
+                        <div class="mb-2"><label class="form-label">Legajo</label><input id="modalLegajo" class="form-control"></div>
+                        <div class="mb-2"><label class="form-label">Rol</label>
+                                <select id="modalRol" class="form-select"><option value="usuario">Usuario</option><option value="admin">Administrador</option></select>
+                        </div>
+                        <div class="mb-2 position-relative"><label class="form-label">Contraseña (dejar en blanco para no cambiar)</label><input id="modalPass" class="form-control" type="password"><span id="toggleModalPass" style="position:absolute; top:38px; right:12px; cursor:pointer; user-select:none;">👁️</span></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="submitUserModal()">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar lista de usuario -->
+        <div class="modal" tabindex="-1" id="userListModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title">Lista de usuario</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <div class="modal-body">
+                        <table class="table table-sm">
+                            <thead><tr><th>Código</th><th>Descripción</th><th>Fecha</th><th>Stock</th></tr></thead>
+                            <tbody id="userListBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para bloqueo/desbloqueo de usuario -->
+        <div class="modal" tabindex="-1" id="blockModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bloquear / Desbloquear usuario</h5>
+                        <button type="button" class="btn-close" onclick="closeBlockModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="blockModalMessage">¿Qué deseas hacer con este usuario?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="blockModalBlockBtn">Bloquear</button>
+                        <button type="button" class="btn btn-success" id="blockModalUnblockBtn">Desbloquear</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeBlockModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar producto / EAN -->
+        <div class="modal fade" id="editItemModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editItemType">
+                        <input type="hidden" id="editItemKey">
+                        <div class="mb-2" id="editItemEanRow">
+                            <label class="form-label">EAN</label>
+                            <input type="text" id="editItemEan" class="form-control" inputmode="numeric" pattern="[0-9]*" placeholder="EAN">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Código</label>
+                            <input type="text" id="editItemCodigo" class="form-control" inputmode="numeric" pattern="[0-9]*" placeholder="Código">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Descripción</label>
+                            <input type="text" id="editItemDescripcion" class="form-control" placeholder="Descripción">
+                        </div>
+                        <div class="mb-2" id="editItemStockRow">
+                            <label class="form-label">Stock</label>
+                            <input type="number" id="editItemStock" class="form-control" min="0" inputmode="numeric" placeholder="Stock">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="submitEditItemModal()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/admin.js?v=4"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            listarArchivos();
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/static/sw.js').then(() => console.log('SW registered')).catch(()=>{});
+            }
+        });
+    </script>
+</body>
+</html>
